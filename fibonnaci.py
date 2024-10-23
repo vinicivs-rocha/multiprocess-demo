@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from multiprocessing import Pool
 from inflect import engine
 from functools import lru_cache
@@ -11,15 +11,10 @@ def fibonnaci_value(n: int) -> int:
         return n
     return fibonnaci_value(n - 1) + fibonnaci_value(n - 2)
 
-
-def fibonnaci_sequence(n: int) -> int:
-    print(f"Calculating fibonnaci {p.ordinal(n)} value of sequence")
-    return fibonnaci_value(n)
-
-
 def fibonnaci(n: int) -> List[int]:
     print(f"Calculating fibonnaci sequence for {n}")
-    with Pool() as pool:
-        sequence = pool.map(fibonnaci_sequence, list(range(n)))
-    print(f"Calculated fibonnaci sequence for {n}")
+    sequence = map(fibonnaci_value, list(range(n)))
     return sequence
+
+def format_fibonnaci_sequence(n: int) -> Tuple[str, str]:
+    return (f"Sequência de {n} digitos", ", ".join(map(str, fibonnaci(n))))
